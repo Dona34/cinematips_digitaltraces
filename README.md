@@ -1,2 +1,2 @@
 # cinematips
-Data source class project working with api's by GAGNOU Zachary and MILLE-EGEA Alexandra
+Data source class project working with api's and streamlit for digital traces
