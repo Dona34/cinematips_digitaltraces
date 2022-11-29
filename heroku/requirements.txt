@@ -1,0 +1,4 @@
+streamlit
+
+# python version used :
+Python 3.10.4
