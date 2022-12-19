@@ -7,7 +7,28 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-# def hello_world():
+@app.route('/logger/', methods = ["GET"])
+def logger():
+    return render_template('logger.html')
+
+
+# add a route to print the user input in the console from the textbox
+@app.route('/textbox', methods=["POST"])
+def print():
+    script = """
+    <script>
+        function myFunction() {
+        var message = document.getElementById("message").value;
+        console.log(message);
+        }
+    </script>"""
+    return """
+    <input type="text" id="message" placeholder="Enter a message">
+    <button onclick="myFunction()">Print</button>""" + script
+
+
+
+    # def hello_world():
 
 #     prefix_google = """
 #     <!-- Google tag (gtag.js) -->
@@ -29,7 +50,3 @@ def index():
 #     text = request.form['text']
 #     processed_text = text.upper()
 #     return processed_text
-
-@app.route('/logger/', methods = ["GET"])
-def logger():
-    return render_template('logger.html')
