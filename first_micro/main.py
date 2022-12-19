@@ -14,17 +14,9 @@ def logger():
 
 # add a route to print the user input in the console from the textbox
 @app.route('/textbox', methods=["POST"])
-def print():
-    script = """
-    <script>
-        function myFunction() {
-        var message = document.getElementById("message").value;
-        console.log(message);
-        }
-    </script>"""
-    return """
-    <input type="text" id="message" placeholder="Enter a message">
-    <button onclick="myFunction()">Print</button>""" + script
+def text():
+    return render_template('text.html')
+    
 
 
 
