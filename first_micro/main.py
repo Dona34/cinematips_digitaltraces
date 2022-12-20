@@ -1,5 +1,5 @@
-from flask import Flask, request, render_template
-
+from flask import Flask, render_template
+import requests
 
 app = Flask(__name__)
 
@@ -10,6 +10,14 @@ def index():
 @app.route('/logger/', methods = ["GET"])
 def logger():
     return render_template('logger.html')
+
+@app.route('/cookies/', methods = ["GET"])
+def req():
+    #req = requests.get("https://www.google.com/")
+    req = requests.get("https://analytics.google.com/analytics/web/#/p344238092/reports/intelligenthome")
+    
+    #return req.cookies.get_dict()
+    return req.text
 
 
 # add a route to print the user input in the console from the textbox
