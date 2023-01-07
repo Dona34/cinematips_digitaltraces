@@ -2,3 +2,7 @@ flask
 requests
 pytrends
 datetime
+# codecs
+# threading
+# time
+# functools

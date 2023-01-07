@@ -2,6 +2,8 @@ from flask import Flask, render_template
 import requests
 from pytrends.request import TrendReq
 from datetime import datetime
+import time
+from collections import Counter
 
 app = Flask(__name__, static_url_path='',
             static_folder='static',
@@ -31,10 +33,9 @@ def req():
 def text():
     return render_template('text.html')
 
-
+# TP3
 # pytrends 
-
-@app.route('/trend_egea', methods=["GET"])
+@app.route('/trend_egea/', methods=["GET"])
 def trend_egea():
 
     pytrends = TrendReq(hl='en-US', tz=360)
@@ -81,6 +82,61 @@ def trend_egea():
     return prefix_google
 
 
+#timer Log        
+
+def log_time(func):
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        end = time.perf_counter()
+        print(f"Execution time: {end - start:.6f} seconds")
+        return result
+    return wrapper
+
+@app.route('/log_time/')
+@log_time
+def counter():
+    for i in range(1):
+        start_time = time.time()
+        with open('shakespeare.txt', 'r') as f:
+            text = f.read()
+        word_count_dict = count_words_dict(text)
+        start_time_2 = time.time()
+        word_count_counter = count_words_function(text)
+        print(word_count_dict)
+        print(word_count_counter) 
+    return "Counting time dictionnary"+"   "+f"  {(time.time() - start_time_2)}"+"Counting time counter"+"   "+f"{(start_time_2 - start_time)}"
+
+#counter of words in shakespeare file
+@app.route('/counter')
+def counter():
+    with open('shakespeare.txt', 'r') as f:
+        text = f.read()
+    start_time = time.time()
+    word_count_dict = count_words_dict(text)
+    dict_time = f"The time to compute with dict is {time.time() - start_time}"
+
+    start_time = time.time()
+    word_count_counter = count_words_function(text)
+    func_time = f"The time to compute with Counter function is {time.time() - start_time}"
+
+    return f"""{dict_time}<br><br>{func_time}<br><br>{word_count_dict}<br><br>{word_count_counter}"""
+
+
+def count_words_dict(text):
+    word_dict = {}
+    for word in text.split():
+        if word in word_dict:
+            word_dict[word] += 1
+        else:
+            word_dict[word] = 1
+    return word_dict
+
+
+def count_words_function(text):
+    return Counter(text.split())
+
+# TP1
 
 
     # def hello_world():
